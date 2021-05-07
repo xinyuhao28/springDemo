@@ -1,0 +1,4 @@
+
+  zookeeper:
+    address: 101.200.215.115:2181
+    timeout: 4000

@@ -1,0 +1,7 @@
+spring:
+  kafka:
+    producer:
+      bootstrap-servers: 101.200.215.115:9092	#Kafka的位置
+
+ #     consumer:
+ #       group-id: consumer-group  #命令kafka的组id,可以随便起

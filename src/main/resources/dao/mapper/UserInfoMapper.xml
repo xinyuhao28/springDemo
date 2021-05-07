@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="UserInfoDaoID">
+
+
+    <resultMap type="hxy.hbao.domain.UserInfo" id="UserInfoID">
+        <id column="pk_id" property="id" jdbcType="INTEGER" />
+        <result column="name" property="name" jdbcType="VARCHAR"  />
+        <result column="age" property="age"  jdbcType="INTEGER"/>
+        <result column="passward" property="password" jdbcType="VARCHAR" />
+    </resultMap>
+
+    <insert id="save" parameterType="hxy.hbao.domain.UserInfo" useGeneratedKeys="true" keyProperty="id">
+        insert into UserInfo (name,age,passward) values (#{name},#{age},#{password});
+    </insert>
+
+    <select id="getById" parameterType="int" resultMap="UserInfoID">
+         select `name`,`age`,`passward` from UserInfo where pk_id = #{value}
+      <!--    select * from UserInfo where pk_id = #{value}-->
+     </select>
+     <select id="list" resultType="hxy.hbao.domain.UserInfo" resultMap="UserInfoID">
+         select `pk_id`,`name`,`age`,`passward` from UserInfo
+         <where>
+             <if test="pk_id != null and pk_id != '-1' " > and pk_id = #{pk_id} </if>
+             <if test="name != null  and name != '' " > and name = #{name} </if>
+             <if test="age != null  and age != '-1' " > and age = #{age} </if>
+             <if test="passward != null  and passward != '' " > and passward = #{passward} </if>
+         </where>
+         <choose>
+             <when test="sort != null and sort.trim() != ''">
+                 order by ${sort} ${order}
+             </when>
+             <otherwise>
+                 order by pk_id desc
+             </otherwise>
+         </choose>
+         <if test="offset != null and limit != null">
+             limit #{offset}, #{limit}
+         </if>
+     </select>
+  <!--  <select id="getCustomerById" resultMap="UserInfo">
+        select * from UserInfo
+        where pk_id = #{id};
+    </select>
+    -->
+</mapper>

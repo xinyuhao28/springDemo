@@ -1,0 +1,32 @@
+
+server:
+  port: 8080
+spring:
+  profiles:
+    include:
+      - zookeeper
+      - redis
+      - kafka
+  # Redis数据库索引（默认为0）
+  cache:
+    type: redis
+  debug: true
+
+
+#下面的数据库配置是初始化数据用的是通过jpa实现的不是mybatis
+#initialization-mode: never 是关闭这个功能的
+  datasource:
+    url: jdbc:mysql://101.200.215.115:3307/my_db?useUnicode=true&characterEncoding=utf-8&autoReconnect=true&useSSL=false&serverTimezone=UTC
+    username: root
+    password: hyf781208
+    schema:
+      - classpath:static/schema.sql
+      - classpath:static/data.sql
+      #   continue-on-error: true
+    initialization-mode: never
+  #schema: classpath:schema-*.sql
+
+
+  mybatis:
+    configuration:
+      log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
